@@ -1,2 +1,2 @@
 # Normaliser les fins de ligne pour tous les fichiers texte
-* text=auto
+* text=auto eol=lf
