@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from "@angular/core";
+import { CartService } from "app/cart/data-access/cart.service";
 import { Product, INVENTORY_STATUS_MAP, Severity } from "app/products/data-access/product.model";
 import { ProductsService } from "app/products/data-access/products.service";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
@@ -34,6 +35,7 @@ const emptyProduct: Product = {
 })
 export class ProductListComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
+  private readonly cartService = inject(CartService);
 
   public readonly products = this.productsService.products;
 
@@ -43,6 +45,11 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.productsService.get().subscribe();
+    this.cartService.getCart().subscribe();
+  }
+
+  public onAddCartItem(product : Product){
+    this.cartService.addCartItem(product).subscribe();
   }
 
   public onCreate() {
@@ -85,7 +92,6 @@ export class ProductListComponent implements OnInit {
   public onImgError(event : Event){
       const target = event.target as HTMLImageElement;
       target.src = 'assets/images/no-image.jpg';
-
   }
 
   private closeDialog() {
