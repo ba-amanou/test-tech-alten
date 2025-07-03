@@ -1,6 +1,6 @@
 <h1 class="text-center">Votre panier</h1>
 
-<p-dataView #dv [value]="cart().items">
+<p-dataView #dv [value]="cart().items" [emptyMessage]="'Aucun article dans votre panier'">
     <ng-template pTemplate="list" let-cartItems>
         <div class="grid grid-nogutter">
             <div class="col-12" class="col-12">
