@@ -4,7 +4,6 @@ import { Product, INVENTORY_STATUS_MAP, Severity } from "app/products/data-acces
 import { ProductsService } from "app/products/data-access/products.service";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
 import { ButtonModule } from "primeng/button";
-import { CardModule } from "primeng/card";
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
@@ -31,7 +30,7 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, TagModule , ProductFormComponent],
+  imports: [DataViewModule, ButtonModule, DialogModule, TagModule , ProductFormComponent],
 })
 export class ProductListComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
