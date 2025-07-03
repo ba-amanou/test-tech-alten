@@ -1,1 +1,36 @@
 <h1 class="text-center">Formulaire de contact</h1>
+
+<form class="p-4" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+        <label for="email">Email</label>
+        <input  pInputText id="email" type="email" formControlName="email"/>
+        @if(email.invalid && (email.dirty || email.touched)) {
+            <div class="p-error">
+                @if(email.errors?.['required']){
+                    <small class="p-error block">Email requis</small>
+                } 
+                @if(email.errors?.['email']){
+                    <small class="p-error block">Email invalide</small>
+                }
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="message">Message</label>
+        <textarea pInputTextarea rows="10" id="message" name="message" formControlName="message"></textarea>
+        @if(message.invalid && (message.dirty || message.touched)){
+            <div class="p-error">
+                @if(message.errors?.['required']){
+                    <small>Message requis</small>
+                }
+                @if(message.errors?.['maxlength']){
+                    <small>Maximum 300 caractères</small>
+                }
+            </div>
+        }
+    </div>
+    <div class="flex flex-row-reverse">
+        <button pButton type="submit" label="envoyer" [disabled]="contactForm.invalid || isSubmitting"></button>
+    </div>            
+</form>
+<p-toast/>
