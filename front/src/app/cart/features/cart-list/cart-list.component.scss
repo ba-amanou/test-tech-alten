@@ -1,0 +1,20 @@
+::ng-deep .p-inputnumber{
+    .p-inputnumber-input{
+        width: 5rem;
+        height : 1.65rem;
+        border-radius:0px;
+    }
+
+    .p-inputnumber-button{
+        width: 1rem !important;
+        height: 1.65rem !important;
+    }
+
+    .p-inputnumber-button-down{
+        border-radius: 4px 0 0 4px;
+    }
+
+    .p-inputnumber-button-up{
+        border-radius: 0 4px 4px 0;
+    }
+}

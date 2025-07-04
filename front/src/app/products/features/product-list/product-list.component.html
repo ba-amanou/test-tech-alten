@@ -2,7 +2,9 @@
 
 <p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
 
-<p-dataView #dv [value]="products()">
+<input type="text" pInputText placeholder="Rechercher un produit..." [(ngModel)]="filterText" class="ml-2"/>
+
+<p-dataView #dv [value]="filteredProducts()" [rows]="6" [paginator]="true" [emptyMessage]="'Aucun produit trouvé'">
     <ng-template pTemplate="list" let-products>
         <div class="grid grid-nogutter">
             <div class="col-12" class="col-12">

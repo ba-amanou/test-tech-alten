@@ -1,6 +1,6 @@
 <h1 class="text-center">Votre panier</h1>
 
-<p-dataView #dv [value]="cart().items">
+<p-dataView #dv [value]="cart().items" [emptyMessage]="'Aucun article dans votre panier'">
     <ng-template pTemplate="list" let-cartItems>
         <div class="grid grid-nogutter">
             <div class="col-12" class="col-12">
@@ -21,8 +21,11 @@
                                     <i class="pi pi-star-fill text-yellow-500"></i>
                                 </div>
                             </div>
-                            <div class="flex align-items-center gap-2 text-sm font-semibold text-700 white-space-nowrap">
-                                <span>Quantité : {{item.quantity}}</span>
+                            <div>
+                                <label class="mb-2 block font-medium text-secondary text-sm" for="horizontal">
+                                    Quantité
+                                </label>
+                                <p-inputNumber [(ngModel)]="item.quantity" (onBlur)="onQuantityChange(item)" [min]="1" [allowEmpty]="false" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal"/>
                             </div>
                         </div>
                         <div class="flex flex-column md:align-items-end gap-5">

@@ -57,6 +57,20 @@ import { Product } from "app/products/data-access/product.model";
         );
     }
 
+    public updateCartItemQuantity(item: CartItem): Observable<boolean> {
+        return this.http.patch<boolean>(`${this.path}/items/${item.product.id}`, { quantity: item.quantity }).pipe(
+            catchError(() => {
+                return of(true);
+            }),
+            tap(() => this._cart.update(cart => ({
+                ...cart,
+                items : cart.items.map(cartItem => item.product.id === cartItem.product.id? {...cartItem, quantity:item.quantity}: cartItem)
+                })
+            ))
+        )
+    };
+        
+
     public deleteCartItem(productId: number): Observable<boolean> {
         return this.http.delete<boolean>(`${this.path}/items/${productId}`).pipe(
             catchError(() => {

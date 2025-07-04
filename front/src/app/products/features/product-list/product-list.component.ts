@@ -1,13 +1,14 @@
-import { Component, OnInit, inject, signal } from "@angular/core";
+import { Component, OnInit, computed, inject, signal } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { CartService } from "app/cart/data-access/cart.service";
 import { Product, INVENTORY_STATUS_MAP, Severity } from "app/products/data-access/product.model";
 import { ProductsService } from "app/products/data-access/products.service";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
 import { ButtonModule } from "primeng/button";
-import { CardModule } from "primeng/card";
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
+import { InputTextModule } from 'primeng/inputtext';
 
 const emptyProduct: Product = {
   id: 0,
@@ -31,7 +32,7 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, TagModule , ProductFormComponent],
+  imports: [FormsModule, DataViewModule, ButtonModule, DialogModule, TagModule , ProductFormComponent, InputTextModule],
 })
 export class ProductListComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
@@ -42,10 +43,28 @@ export class ProductListComponent implements OnInit {
   public isDialogVisible = false;
   public isCreation = false;
   public readonly editedProduct = signal<Product>(emptyProduct);
+  public readonly filterText = signal('');
+  
+  public readonly filteredProducts = computed(() => {
+    const all = this.products();
+    const filter = this.filterText().toLowerCase();
+
+    return all.filter(product =>
+      product.name.toLowerCase().includes(filter)
+    );
+  });
 
   ngOnInit() {
     this.productsService.get().subscribe();
     this.cartService.getCart().subscribe();
+  }
+
+  public get filter(): string {
+    return this.filterText();
+  }
+
+  public set filter(value: string) {
+    this.filterText.set(value);
   }
 
   public onAddCartItem(product : Product){
