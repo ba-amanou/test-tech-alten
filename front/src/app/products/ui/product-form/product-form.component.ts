@@ -45,7 +45,15 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
           cols="30" 
           [(ngModel)]="editedProduct().description">
         </textarea>
-      </div>      
+      </div>
+      <div class="form-field">
+        <label for="price">Quantité</label>
+        <p-inputNumber 
+          [(ngModel)]="editedProduct().quantity" 
+          name="quantity"
+          [min]=0
+        /> 
+      </div>            
       <div class="form-field">
         <label for="description">Catégorie</label>
         <p-dropdown 
