@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.producttrialmaster.back.dto.ProductRequestDTO;
 import com.producttrialmaster.back.dto.ProductResponseDTO;
+import com.producttrialmaster.back.exception.DuplicateProductCodeException;
 import com.producttrialmaster.back.mapper.ProductMapper;
 import com.producttrialmaster.back.model.Product;
 import com.producttrialmaster.back.repository.ProductRepository;
@@ -29,9 +30,9 @@ public class ProductService {
 
     public Product saveProduct(ProductRequestDTO dto){
         Product product = ProductMapper.toEntity(dto);
-        /* if (this.repository.existsByCode(dto.getCode())) {
+        if (this.repository.existsByCode(dto.getCode())) {
             throw new DuplicateProductCodeException(dto.getCode());
-        } */
+        }
         Instant now = Instant.now();
         product.setCreatedAt(now);
         product.setUpdatedAt(now);
