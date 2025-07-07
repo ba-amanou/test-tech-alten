@@ -1,15 +1,23 @@
 package com.producttrialmaster.back.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class ProductRequestDTO {
+    @NotBlank
     public String code;
+    @NotBlank
     public String name;
     public String description;
     public String image;
     public String category;
+    @PositiveOrZero
     public Double price;
+    @PositiveOrZero
     public Integer quantity;
     public String internalReference;
     public Long shellId;
+    @PositiveOrZero
     public Integer rating;
 
     public ProductRequestDTO(){}
