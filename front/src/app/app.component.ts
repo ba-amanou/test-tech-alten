@@ -5,13 +5,14 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BadgeModule } from 'primeng/badge';
 import { PanelMenuComponent } from "./shared/ui/panel-menu/panel-menu.component";
 import { CartService } from "./cart/data-access/cart.service";
+import { ToastModule } from "primeng/toast";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
   standalone: true,
-  imports: [RouterModule, SplitterModule, ToolbarModule, BadgeModule, PanelMenuComponent],
+  imports: [RouterModule, SplitterModule, ToolbarModule, BadgeModule, PanelMenuComponent, ToastModule],
 })
 export class AppComponent {
   title = "ALTEN SHOP";

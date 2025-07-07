@@ -29,6 +29,15 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
           required>
       </div>
       <div class="form-field">
+        <label for="code">Code</label>
+        <input pInputText
+          type="text"
+          id="code"
+          name="code"
+          [(ngModel)]="editedProduct().code"
+          required>
+      </div>      
+      <div class="form-field">
         <label for="price">Prix</label>
         <p-inputNumber 
           [(ngModel)]="editedProduct().price" 
@@ -52,6 +61,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
           [(ngModel)]="editedProduct().quantity" 
           name="quantity"
           [min]=0
+          required
         /> 
       </div>            
       <div class="form-field">
