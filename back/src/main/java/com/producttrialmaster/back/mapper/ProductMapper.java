@@ -1,7 +1,5 @@
 package com.producttrialmaster.back.mapper;
 
-import java.time.Instant;
-
 import com.producttrialmaster.back.dto.ProductImportDTO;
 import com.producttrialmaster.back.dto.ProductRequestDTO;
 import com.producttrialmaster.back.dto.ProductResponseDTO;
@@ -14,7 +12,6 @@ public class ProductMapper {
     
     Product product = new Product();
 
-    product.setId(dto.getId());
     product.setCode(dto.getCode());
     product.setName(dto.getName());
     product.setDescription(dto.getDescription());
@@ -25,8 +22,6 @@ public class ProductMapper {
     product.setInternalReference(dto.getInternalReference());
     product.setShellId(dto.getShellId());
     product.setRating(dto.getRating());
-    product.setCreatedAt(Instant.ofEpochMilli(dto.getCreatedAt()));
-    product.setUpdatedAt(Instant.ofEpochMilli(dto.getUpdatedAt()));
     return product;    
 
     }

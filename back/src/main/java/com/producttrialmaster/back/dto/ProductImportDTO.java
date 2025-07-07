@@ -1,27 +1,27 @@
 package com.producttrialmaster.back.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class ProductImportDTO {
-    private Long id;
-    private String code;
-    private String name;
-    private String description;
-    private String image;
-    private String category;
-    private Double price;
-    private Integer quantity;
-    private String internalReference;
-    private Long shellId;
-    private String inventoryStatus;
-    private Integer rating;
+    @NotBlank
+    public String code;
+    @NotBlank
+    public String name;
+    public String description;
+    public String image;
+    public String category;
+    @PositiveOrZero
+    public Double price;
+    @PositiveOrZero
+    public Integer quantity;
+    public String internalReference;
+    public Long shellId;
+    @PositiveOrZero
+    public Integer rating;    
     private Long createdAt;
     private Long updatedAt;
     
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public String getCode() {
         return code;
     }
@@ -76,18 +76,13 @@ public class ProductImportDTO {
     public void setShellId(Long shellId) {
         this.shellId = shellId;
     }
-    public String getInventoryStatus() {
-        return inventoryStatus;
-    }
-    public void setInventoryStatus(String inventoryStatus) {
-        this.inventoryStatus = inventoryStatus;
-    }
     public Integer getRating() {
         return rating;
     }
     public void setRating(Integer rating) {
         this.rating = rating;
     }
+
     public Long getCreatedAt() {
         return createdAt;
     }
