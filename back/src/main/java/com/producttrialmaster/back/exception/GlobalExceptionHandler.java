@@ -2,10 +2,15 @@ package com.producttrialmaster.back.exception;
 
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,29 +18,37 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-            errors.put(error.getField(), error.getDefaultMessage())
-        );
-        return ResponseEntity.badRequest().body(errors);
+    private Map<String, Object> createErrorBody(HttpStatus status, String message) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", Instant.now());
+        body.put("status", status.value());
+        body.put("error", status.getReasonPhrase());
+        body.put("message", message);
+        return body;
     }
 
-    @ExceptionHandler(DuplicateProductCodeException.class)
-    public ResponseEntity<Map<String, Object>> handleDuplicateCode(DuplicateProductCodeException ex) {
-        Map<String, Object> errorBody = new HashMap<>();
-        errorBody.put("timestamp", Instant.now());
-        errorBody.put("status", HttpStatus.CONFLICT.value());
-        errorBody.put("error", "Conflit");
-        errorBody.put("message", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorBody);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
+        // on récupére la première erreur uniquement pour simplifier
+        FieldError firstError = ex.getBindingResult().getFieldErrors().stream().findFirst().orElse(null);
+        String errorMessage = firstError != null
+            ? String.format("Le champ '%s' %s", firstError.getField(), firstError.getDefaultMessage())
+            : "Erreur de validation inconnue";
+
+        Map<String, Object> errorBody = createErrorBody(HttpStatus.BAD_REQUEST, errorMessage);
+        return ResponseEntity.badRequest().body(errorBody);
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<Map<String, Object>> handleApiExceptions(ApiException ex){
+        Map<String, Object> errorBody = createErrorBody(ex.getStatus(), ex.getMessage());
+        return ResponseEntity.status(ex.getStatus()).body(errorBody);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleUnexpectedErrors(Exception ex) {
+    public ResponseEntity<Map<String, Object>> handleUnexpectedErrors(Exception ex) {
         ex.printStackTrace(); // journalisation
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Une erreur interne est survenue."));
+        Map<String, Object> errorBody = createErrorBody(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
     }
 }
