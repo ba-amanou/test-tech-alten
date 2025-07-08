@@ -5,12 +5,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.producttrialmaster.back.exception.ApiException;
+
+import io.jsonwebtoken.ExpiredJwtException;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -50,9 +55,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
+        } catch (ExpiredJwtException ex) {
+            request.setAttribute("errorMessage", "Le token est expiré");
+            SecurityContextHolder.clearContext();
+            // Forcer le déclenchement d’une erreur de type auth
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Le token est expiré");
+            return;
         } catch (Exception e) {
-            System.out.println("JWT invalide : " + e.getMessage());
+            request.setAttribute("errorMessage", "Token invalide");
+            SecurityContextHolder.clearContext();
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token invalide");
+            return;
         }
+
 
         filterChain.doFilter(request, response);
     }
