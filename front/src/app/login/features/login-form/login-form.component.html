@@ -1,0 +1,17 @@
+<div class="card flex justify-content-center mt-4">
+<p-card header="Login" class="p-shadow-5 text-center">
+    <form (ngSubmit)="onLogin()">
+        <div class="p-field flex flex-column gap-2 mb-4">
+            <label for="email">Email</label>
+            <input pInputText id="email" type="email" [(ngModel)]="email" name="email" pInputText required />
+        </div>
+        <div class="p-field flex flex-column gap-2 mb-4">
+            <label for="password">Password</label>
+            <input pInputText id="password" type="password" [(ngModel)]="password" name="password" pInputText required />
+        </div>
+        <div class="block text-center">
+            <button pButton type="submit" label="Se connecter" ></button>
+        </div>
+    </form>
+</p-card>
+</div>
