@@ -27,7 +27,7 @@ public class TokenService {
             .orElseThrow(() -> new ApiException("Utilisateur non trouvé", HttpStatus.NOT_FOUND));
 
         if(!passwordEncoder.matches(password, account.getPassword())){
-            throw new ApiException("Mot de passe incorect", HttpStatus.UNAUTHORIZED);
+            throw new ApiException("Mot de passe incorrect", HttpStatus.UNAUTHORIZED);
         }
 
         return jwtTokenUtil.generateToken(account.getEmail());
