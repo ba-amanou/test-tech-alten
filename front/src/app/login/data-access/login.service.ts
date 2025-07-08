@@ -15,12 +15,17 @@ export class LoginService {
     return this.http.post<any>(this.path, { email, password }).pipe(
         tap( response => {
             this.storeToken(response.token);
+            this.storeEmail(email);
         })
     );
   }
 
   isAuthenticated(): boolean {
     return this.getToken() !== null;
+  }
+
+  isAdmin(): boolean {
+    return this.getEmail() === 'admin@admin.com';
   }
 
   storeToken(token: string): void {
@@ -30,6 +35,14 @@ export class LoginService {
   getToken(): string | null {
     return localStorage.getItem('jwt');
   }
+
+  storeEmail(email: string): void {
+    localStorage.setItem('email', email);
+  }
+
+  getEmail(): string | null {
+    return localStorage.getItem('email');
+  }  
 
   logout(): void {
     localStorage.removeItem('jwt');
