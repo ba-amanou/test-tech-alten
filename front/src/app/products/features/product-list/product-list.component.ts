@@ -9,6 +9,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
 import { InputTextModule } from 'primeng/inputtext';
+import { LoginService } from "app/login/data-access/login.service";
 
 const emptyProduct: Product = {
   id: 0,
@@ -37,6 +38,7 @@ const emptyProduct: Product = {
 export class ProductListComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
+  private readonly loginService = inject(LoginService);
 
   public readonly products = this.productsService.products;
 
@@ -115,5 +117,9 @@ export class ProductListComponent implements OnInit {
 
   private closeDialog() {
     this.isDialogVisible = false;
+  }
+
+  public get isAdmin() : boolean {
+    return this.loginService.isAdmin();
   }
 }

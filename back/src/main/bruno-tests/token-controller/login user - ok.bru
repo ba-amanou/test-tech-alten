@@ -1,0 +1,32 @@
+meta {
+  name: login user - ok
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/token
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "user@user.com",
+    "password": "user"
+  }
+}
+
+tests {
+  test("Login should return 200", function () {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Response should contain token", function () {
+    const body = res.getBody();
+    expect(body).to.have.property('token');
+    expect(body.token).to.exist;
+  });
+  
+  
+}

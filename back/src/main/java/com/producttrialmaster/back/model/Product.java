@@ -3,8 +3,6 @@ package com.producttrialmaster.back.model;
 import java.time.Instant;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name="products", uniqueConstraints = @UniqueConstraint(columnNames = "code"))
@@ -18,29 +16,29 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @Column(nullable = false, unique = true)
     private String code;
 
-    @NotBlank
+    @Column(nullable = false)
     private String name;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String image;
 
     private String category;
 
-    @PositiveOrZero
+    @Column(nullable = false)
     private Double price;
 
-    @PositiveOrZero
+    @Column(nullable = false)
     private Integer quantity;
 
     private String internalReference;
 
     private Long shellId;
 
-    @PositiveOrZero
     private Integer rating;
 
     private Instant createdAt;

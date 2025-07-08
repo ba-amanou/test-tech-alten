@@ -1,0 +1,29 @@
+meta {
+  name: updateCartItem
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/cart/items/:productId
+  body: json
+  auth: bearer
+}
+
+params:path {
+  productId: 
+}
+
+headers {
+  Authorization: 
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "quantity": 0
+  }
+}

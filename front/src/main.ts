@@ -17,6 +17,7 @@ import { AppComponent } from "./app/app.component";
 import { environment } from "./environments/environment";
 import { ToastModule } from "primeng/toast";
 import { successErrorInterceptor} from "app/core/interceptors/success-error.interceptor";
+import { authInterceptor } from "app/core/interceptors/auth.interceptor";
 
 if (environment.production) {
   enableProdMode();
@@ -27,7 +28,7 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(BrowserModule),
     provideHttpClient(
       withInterceptorsFromDi(),
-      withInterceptors([successErrorInterceptor])
+      withInterceptors([successErrorInterceptor,authInterceptor])
     ),
     provideAnimations(),
     provideRouter(APP_ROUTES),

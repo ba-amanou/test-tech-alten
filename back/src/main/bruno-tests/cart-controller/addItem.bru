@@ -1,0 +1,26 @@
+meta {
+  name: addItem
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/cart/items
+  body: json
+  auth: bearer
+}
+
+headers {
+  Authorization: 
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "id": 0,
+    "quantity": 0
+  }
+}

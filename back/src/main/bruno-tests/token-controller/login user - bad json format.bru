@@ -1,0 +1,25 @@
+meta {
+  name: login user - bad json format
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/api/token
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "a",
+    "password": "user"
+  }
+}
+
+tests {
+  test("Login should fail with bad email format", function () {
+    expect(res.status).to.equal(400);
+  });
+  
+}

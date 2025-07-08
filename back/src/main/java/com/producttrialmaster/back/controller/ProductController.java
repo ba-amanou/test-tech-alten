@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ProductController {
         return service.getAllProducts();
     }
 
+    @PreAuthorize("@securityService.isAdmin(authentication.name)")
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(@Valid@RequestBody ProductRequestDTO dto) {
         ProductResponseDTO productDTO = service.saveProduct(dto);
@@ -40,12 +42,14 @@ public class ProductController {
         return ResponseEntity.ok(productDTO);
     }
 
+    @PreAuthorize("@securityService.isAdmin(authentication.name)")
     @PatchMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDTO dto){
         ProductResponseDTO productDTO = service.updateProduct(id,dto);
         return ResponseEntity.ok(productDTO);
     }
 
+    @PreAuthorize("@securityService.isAdmin(authentication.name)")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
         service.deleteProduct(id);
