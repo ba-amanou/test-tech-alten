@@ -1,5 +1,7 @@
 package com.producttrialmaster.back.dto;
 
+import com.producttrialmaster.back.model.Product;
+
 public class ProductResponseDTO {
     public Long id;
     public String code;
@@ -48,6 +50,26 @@ public class ProductResponseDTO {
         this.rating = rating;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public static ProductResponseDTO fromEntity(Product product) {
+        if (product == null) {
+            return null;
+        }
+        ProductResponseDTO dto = new ProductResponseDTO();
+        dto.setId(product.getId());
+        dto.setName(product.getName());
+        dto.setPrice(product.getPrice());
+        dto.setCode(product.getCode());
+        dto.setDescription(product.getDescription());
+        dto.setImage(product.getImage());
+        dto.setCategory(product.getCategory());
+        dto.setQuantity(product.getQuantity());
+        dto.setInternalReference(product.getInternalReference());
+        dto.setShellId(product.getShellId());
+        dto.setInventoryStatus(product.getInventoryStatus().name());
+        dto.setRating(product.getRating());
+        return dto;
     }
 
     public Long getId() {
