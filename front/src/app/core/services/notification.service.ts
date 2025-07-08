@@ -10,7 +10,7 @@ export class NotificationService {
       severity: 'success',
       summary,
       detail,
-      life: 4000,
+      life: 2000,
     });
   }
 
@@ -19,7 +19,7 @@ export class NotificationService {
       severity: 'error',
       summary,
       detail,
-      life: 6000,
+      life: 3000,
     });
   }
 
@@ -28,7 +28,7 @@ export class NotificationService {
       severity: 'info',
       summary,
       detail,
-      life: 4000,
+      life: 2000,
     });
   }
 
@@ -37,7 +37,7 @@ export class NotificationService {
       severity: 'warn',
       summary,
       detail,
-      life: 4000,
+      life: 2000,
     });
   }
 
