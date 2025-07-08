@@ -3,13 +3,14 @@ import { Cart, CartItem } from "./cart.model";
 import { HttpClient } from "@angular/common/http";
 import { catchError, Observable, of, tap } from "rxjs";
 import { Product } from "app/products/data-access/product.model";
+import { environment } from "environments/environment";
 
 @Injectable({
     providedIn: "root"
 }) export class CartService {
 
     private readonly http = inject(HttpClient);
-    private readonly path = "/api/cart";
+    private readonly path = `${environment.apiUrl}/cart`
     
     private readonly _cart = signal<Cart>( {items : []} );
 
@@ -17,18 +18,12 @@ import { Product } from "app/products/data-access/product.model";
 
     public getCart(): Observable<Cart> {
         return this.http.get<Cart>(this.path).pipe(
-            catchError((error) => {
-                return of(this._cart());
-            }),
             tap((cart) => this._cart.set(cart)),
         );
     }
 
-    public addCartItem(product : Product): Observable<boolean> {
-        return this.http.post<boolean>(this.path+'/items', {id:product.id}).pipe(
-            catchError((error) => {
-                return of(true);
-            }),
+    public addCartItem(product : Product): Observable<CartItem> {
+        return this.http.post<CartItem>(this.path+'/items', {id:product.id,quantity:1}).pipe(
             tap(() => {
                 //verifier si le produit existe déjà
                 const existingItem = this._cart().items.find(i => i.product.id === product.id);
@@ -57,11 +52,8 @@ import { Product } from "app/products/data-access/product.model";
         );
     }
 
-    public updateCartItemQuantity(item: CartItem): Observable<boolean> {
-        return this.http.patch<boolean>(`${this.path}/items/${item.product.id}`, { quantity: item.quantity }).pipe(
-            catchError(() => {
-                return of(true);
-            }),
+    public updateCartItemQuantity(item: CartItem): Observable<CartItem> {
+        return this.http.patch<CartItem>(`${this.path}/items/${item.product.id}`, { quantity: item.quantity }).pipe(
             tap(() => this._cart.update(cart => ({
                 ...cart,
                 items : cart.items.map(cartItem => item.product.id === cartItem.product.id? {...cartItem, quantity:item.quantity}: cartItem)
@@ -71,11 +63,8 @@ import { Product } from "app/products/data-access/product.model";
     };
         
 
-    public deleteCartItem(productId: number): Observable<boolean> {
-        return this.http.delete<boolean>(`${this.path}/items/${productId}`).pipe(
-            catchError(() => {
-                return of(true);
-            }),
+    public deleteCartItem(productId: number): Observable<void> {
+        return this.http.delete<void>(`${this.path}/items/${productId}`).pipe(
             tap(() => this._cart.update(cart => ({
                 ...cart,
                 items : cart.items.filter(item => item.product.id !== productId)
