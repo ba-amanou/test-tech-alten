@@ -1,0 +1,23 @@
+meta {
+  name: removeItem
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{baseUrl}}/api/cart/items/:productId
+  body: none
+  auth: bearer
+}
+
+params:path {
+  productId: 
+}
+
+headers {
+  Authorization: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

@@ -1,0 +1,34 @@
+meta {
+  name: updateProduct
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/api/products/:id
+  body: json
+  auth: bearer
+}
+
+params:path {
+  id: 
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "code": "",
+    "name": "",
+    "description": "",
+    "image": "",
+    "category": "",
+    "price": "",
+    "quantity": 0,
+    "internalReference": "",
+    "shellId": 0,
+    "rating": 0
+  }
+}

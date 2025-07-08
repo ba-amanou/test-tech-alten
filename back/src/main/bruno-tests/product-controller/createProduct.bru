@@ -1,0 +1,30 @@
+meta {
+  name: createProduct
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/products
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "code": "",
+    "name": "",
+    "description": "",
+    "image": "",
+    "category": "",
+    "price": "",
+    "quantity": 0,
+    "internalReference": "",
+    "shellId": 0,
+    "rating": 0
+  }
+}

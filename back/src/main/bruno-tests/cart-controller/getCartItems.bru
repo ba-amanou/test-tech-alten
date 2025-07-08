@@ -1,0 +1,19 @@
+meta {
+  name: getCartItems
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/cart
+  body: none
+  auth: bearer
+}
+
+headers {
+  Authorization: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

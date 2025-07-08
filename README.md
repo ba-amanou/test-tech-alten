@@ -90,7 +90,15 @@ Pour démonstration, deux comptes sont disponibles à la connexion
 - admin -> Email : admin@admin.com / Password : admin
 - user -> Email : user@user.com / Password : user
 
+#### Tests API
+```
+Tests Bruno disponibles dans `bruno-tests/`.
+Seul les tests/endpoint login ont été configurés pour démonstration
 
+- Lancer Bruno
+- Ouvrir le dossier `bruno-tests` comme workspace
+- Exécuter les requêtes et vérifier les tests
+```
 
 ## Screenshots
 
