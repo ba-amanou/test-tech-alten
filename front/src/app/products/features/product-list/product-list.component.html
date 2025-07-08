@@ -8,7 +8,7 @@
     <ng-template pTemplate="list" let-products>
         <div class="grid grid-nogutter">
             <div class="col-12" class="col-12">
-            @for (item of products; track item) {
+            @for (item of products; track item.id) {
                 <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3 border-top-1 surface-border">
                     <div class="md:w-10rem relative">
                         <img class="block xl:block mx-auto border-round w-full" [src]="'assets/images/' + item.image" [alt]="item.name" (error)="onImgError($event)"/>

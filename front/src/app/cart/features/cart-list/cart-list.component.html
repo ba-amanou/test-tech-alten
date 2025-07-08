@@ -4,7 +4,7 @@
     <ng-template pTemplate="list" let-cartItems>
         <div class="grid grid-nogutter">
             <div class="col-12" class="col-12">
-            @for (item of cartItems; track item) {
+            @for (item of cartItems; track item.id) {
                 <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3 border-top-1 surface-border">
                     <div class="md:w-10rem relative">
                         <img class="block xl:block mx-auto border-round w-full" [src]="'assets/images/' + item.product.image" [alt]="item.product.name" (error)="onImgError($event)"/>
